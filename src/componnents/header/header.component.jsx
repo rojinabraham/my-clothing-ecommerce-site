@@ -4,8 +4,16 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assests/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
-
-function Header({ currentUser }) {
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropDown from "../cart-dropdown/cart-dropdown.component";
+function Header({ currentUser, hidden }) {
+  console.log(currentUser, "121");
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+  // if (currentUser.userAuth === undefined) {
+  //   console.log("userAuth");
+  // }
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -15,11 +23,11 @@ function Header({ currentUser }) {
         <Link className="option" to="/shop">
           SHOP
         </Link>
-        <Link className="option" to="shop">
+        <Link className="option" to="/shop">
           CONTACT
         </Link>
         {currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
+          <div className="option" onClick={handleSignOut}>
             Sign Out
           </div>
         ) : (
@@ -27,11 +35,14 @@ function Header({ currentUser }) {
             Sign In
           </Link>
         )}
+        <CartIcon></CartIcon>
       </div>
+      {hidden && <CartDropDown />}
     </div>
   );
 }
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
 });
 export default connect(mapStateToProps)(Header);
