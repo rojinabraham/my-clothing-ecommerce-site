@@ -11,6 +11,10 @@ import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import { createStructuredSelector } from "reselect";
 
 function Header({ currentUser, hidden }) {
+  // console.log(currentUser, "cusrr");
+  const handleSignOut = () => {
+    auth.signOut();
+  };
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -24,7 +28,7 @@ function Header({ currentUser, hidden }) {
           CONTACT
         </Link>
         {currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
+          <div className="option" onClick={handleSignOut}>
             Sign Out
           </div>
         ) : (
