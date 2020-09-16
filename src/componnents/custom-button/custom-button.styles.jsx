@@ -54,6 +54,9 @@ export const CustomButtonContainer = styled.button`
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: absolute;
+  opacity: 0.7;
+  top: 255px;
 
   ${getButtonStyles};
 `;
